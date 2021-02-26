@@ -976,6 +976,25 @@
     
     
     <entry>
+      <title>多分类的两种方式</title>
+      <link href="/2020/02/24/%E5%A4%9A%E5%88%86%E7%B1%BB%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
+      <url>/2020/02/24/%E5%A4%9A%E5%88%86%E7%B1%BB%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/</url>
+      
+        <content type="html"><![CDATA[<html><head><link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script></head><body><h3 id="多分类的两种方式"><a href="#多分类的两种方式" class="headerlink" title="多分类的两种方式"></a>多分类的两种方式</h3><ul><li><p>K个独立的二元分类器——用于不互斥的分类</p></li><li><p>softmax——用于互斥的分类</p></li></ul><p><strong>softmax VS k个二元分类器</strong></p><p>如果你在开发一个音乐分类的应用，需要对k种类型的音乐进行识别，那么是选择使用 softmax 分类器呢，还是使用 logistic 回归算法建立 k 个独立的二元分类器呢？<br>这一选择取决于你的类别之间是否互斥，例如，如果你有四个类别的音乐，分别为：古典音乐、乡村音乐、摇滚乐和爵士乐，那么你可以假设每个训练样本只会被打上一个标签（即：一首歌只能属于这四种音乐类型的其中一种），此时你应该使用类别数 k = 4 的softmax回归。（如果在你的数据集中，有的歌曲不属于以上四类的其中任何一类，那么你可以添加一个“其他类”，并将类别数 k 设为5。）<br>如果你的四个类别如下：人声音乐、舞曲、影视原声、流行歌曲，那么这些类别之间并不是互斥的。例如：一首歌曲可以来源于影视原声，同时也包含人声 。这种情况下，使用4个二分类的 logistic 回归分类器更为合适。这样，对于每个新的音乐作品 ，我们的算法可以分别判断它是否属于各个类别。<br>现在我们来看一个计算视觉领域的例子，你的任务是将图像分到三个不同类别中。(i) 假设这三个类别分别是：室内场景、户外城区场景、户外荒野场景。你会使用sofmax回归还是 3个logistic 回归分类器呢？ (ii) 现在假设这三个类别分别是室内场景、黑白图片、包含人物的图片，你又会选择 softmax 回归还是多个 logistic 回归分类器呢？<br>在第一个例子中，三个类别是互斥的，因此更适于选择softmax回归分类器 。而在第二个例子中，建立三个独立的 logistic回归分类器更加合适。</p></body></html>]]></content>
+      
+      
+      <categories>
+          
+          <category> 机器学习 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>为什么采用交叉熵做为逻辑回归的损失函数</title>
       <link href="/2020/02/24/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%87%E7%94%A8%E4%BA%A4%E5%8F%89%E7%86%B5%E5%81%9A%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/"/>
       <url>/2020/02/24/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%87%E7%94%A8%E4%BA%A4%E5%8F%89%E7%86%B5%E5%81%9A%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/</url>
@@ -995,25 +1014,6 @@
             <tag> 交叉熵 </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>多分类的两种方式</title>
-      <link href="/2020/02/24/%E5%A4%9A%E5%88%86%E7%B1%BB%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
-      <url>/2020/02/24/%E5%A4%9A%E5%88%86%E7%B1%BB%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/</url>
-      
-        <content type="html"><![CDATA[<html><head><link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script></head><body><h3 id="多分类的两种方式"><a href="#多分类的两种方式" class="headerlink" title="多分类的两种方式"></a>多分类的两种方式</h3><ul><li><p>K个独立的二元分类器——用于不互斥的分类</p></li><li><p>softmax——用于互斥的分类</p></li></ul><p><strong>softmax VS k个二元分类器</strong></p><p>如果你在开发一个音乐分类的应用，需要对k种类型的音乐进行识别，那么是选择使用 softmax 分类器呢，还是使用 logistic 回归算法建立 k 个独立的二元分类器呢？<br>这一选择取决于你的类别之间是否互斥，例如，如果你有四个类别的音乐，分别为：古典音乐、乡村音乐、摇滚乐和爵士乐，那么你可以假设每个训练样本只会被打上一个标签（即：一首歌只能属于这四种音乐类型的其中一种），此时你应该使用类别数 k = 4 的softmax回归。（如果在你的数据集中，有的歌曲不属于以上四类的其中任何一类，那么你可以添加一个“其他类”，并将类别数 k 设为5。）<br>如果你的四个类别如下：人声音乐、舞曲、影视原声、流行歌曲，那么这些类别之间并不是互斥的。例如：一首歌曲可以来源于影视原声，同时也包含人声 。这种情况下，使用4个二分类的 logistic 回归分类器更为合适。这样，对于每个新的音乐作品 ，我们的算法可以分别判断它是否属于各个类别。<br>现在我们来看一个计算视觉领域的例子，你的任务是将图像分到三个不同类别中。(i) 假设这三个类别分别是：室内场景、户外城区场景、户外荒野场景。你会使用sofmax回归还是 3个logistic 回归分类器呢？ (ii) 现在假设这三个类别分别是室内场景、黑白图片、包含人物的图片，你又会选择 softmax 回归还是多个 logistic 回归分类器呢？<br>在第一个例子中，三个类别是互斥的，因此更适于选择softmax回归分类器 。而在第二个例子中，建立三个独立的 logistic回归分类器更加合适。</p></body></html>]]></content>
-      
-      
-      <categories>
-          
-          <category> 机器学习 </category>
-          
-      </categories>
-      
       
     </entry>
     
