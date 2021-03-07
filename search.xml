@@ -156,6 +156,31 @@
     
     
     <entry>
+      <title>Java_NIO</title>
+      <link href="/2020/05/18/java_NIO/"/>
+      <url>/2020/05/18/java_NIO/</url>
+      
+        <content type="html"><![CDATA[<html><head><link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script></head><body><h2 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h2><p>同步和异步强调的是消息通信机制 (synchronous communication/ asynchronous communication)。所谓同步，就是在发出一个”调用”时，在没有得到结果之前，该“调用”就不返回。但是一旦调用返回，就得到返回值了。换句话说，就是由“调用者”主动等待这个“调用”的结果。而异步则是相反，”调用”在发出之后，这个调用就直接返回了，所以没有返回结果。换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。而是在”调用”发出后，”被调用者”通过状态、通知来通知调用者，或通过回调函数处理这个调用</p><h2 id="阻塞和非阻塞"><a href="#阻塞和非阻塞" class="headerlink" title="阻塞和非阻塞"></a>阻塞和非阻塞</h2><p>阻塞和非阻塞 强调的是程序在等待调用结果（消息，返回值）时的状态. 阻塞调用是指调用结果返回之前，当前线程会被挂起。调用线程只有在得到结果之后才会返回。非阻塞调用指在不能立刻得到结果之前，该调用不会阻塞当前线程。</p><h2 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h2><p>NIO主要有三大核心部分：Channel(通道)，Buffer(缓冲区), Selector。</p><h3 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h3><p>首先说一下Channel，国内大多翻译成“通道”。<strong>Channel和IO中的Stream(流)是差不多一个等级的</strong>。只不过Stream是单向的，譬如：InputStream, OutputStream.而Channel是双向的，既可以用来进行读操作，又可以用来进行写操作。</p><p>Channel的作用是负责传输，从程序中向网络，文件中进行传输，或者从网络，文件中向程序中进行传输。吧数据从buffer中交给channel，剩下的就由channel去完成，我们就不用管了。NIO中的Channel的主要实现有：</p><ul><li>FileChannel</li><li>DatagramChannel</li><li>SocketChannel</li><li>ServerSocketChannel</li></ul><p>这里看名字就可以猜出个所以然来：分别可以对应文件IO、UDP和TCP（Server和Client）。</p><p>NIO的channel抽象的一个重要特征就是可以通过配置它的阻塞行为，以实现非阻塞式的信道。</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">channel.configureBlocking(<span class="keyword">false</span>)</span><br></pre></td></tr></tbody></table></figure></div><h3 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h3><p>NIO中的关键Buffer实现有：ByteBuffer, CharBuffer, DoubleBuffer, FloatBuffer, IntBuffer, LongBuffer, ShortBuffer，分别对应基本数据类型: byte, char, double, float, int, long, short。当然NIO中还有MappedByteBuffer, HeapByteBuffer, DirectByteBuffer等这里先不进行陈述。</p><p>Buffer顾名思义：缓冲区，实际上是一个容器，一个连续数组。Channel提供从文件、网络读取数据的渠道，但是读写的数据都必须经过Buffer。如下图：</p><p><a href="https://img-blog.csdnimg.cn/2019050721080739.png" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://img-blog.csdnimg.cn/2019050721080739.png" class="lazyload"></a></p><p>向Buffer中写数据：</p><ul><li>从Channel写到Buffer (fileChannel.read(buf))</li><li>通过Buffer的put()方法 （buf.put(…)）</li></ul><p>从Buffer中读取数据：</p><ul><li>从Buffer读取到Channel (channel.write(buf))</li><li>使用get()方法从Buffer中读取数据 （buf.get()）</li></ul><h3 id="Selector"><a href="#Selector" class="headerlink" title="Selector"></a>Selector</h3><p>Selector运行单线程处理多个Channel，如果你的应用打开了多个通道，但每个连接的流量都很低，使用Selector就会很方便。例如在一个聊天服务器中。要使用Selector, 得向Selector注册Channel，然后调用它的select()方法。这个方法会一直阻塞到某个注册的通道有事件就绪。一旦这个方法返回，线程就可以处理这些事件，事件的例子有如新的连接进来、数据接收等。</p><p>Select里面其实就是维持了一个Channel的Map来实现多路复用</p></body></html>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> NIO </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Java_BIO</title>
       <link href="/2020/05/17/Java_BIO/"/>
       <url>/2020/05/17/Java_BIO/</url>
@@ -932,6 +957,25 @@
     
     
     <entry>
+      <title>分类和回归的逻辑统一</title>
+      <link href="/2020/02/24/%E5%88%86%E7%B1%BB%E5%92%8C%E5%9B%9E%E5%BD%92%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%9F%E4%B8%80%20/"/>
+      <url>/2020/02/24/%E5%88%86%E7%B1%BB%E5%92%8C%E5%9B%9E%E5%BD%92%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%9F%E4%B8%80%20/</url>
+      
+        <content type="html"><![CDATA[<html><head><link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script></head><body><p>分类和回归是机器学习的两种模型，但在某种程度上又是逻辑统一的。</p><h3 id="二分类和回归的统一——-sigma"><a href="#二分类和回归的统一——-sigma" class="headerlink" title="二分类和回归的统一——$\sigma()$"></a>二分类和回归的统一——$\sigma()$</h3><p>下面我们从贝叶斯分类器的角度将二分类和回归联系起来。</p><p><a href="https://user-images.githubusercontent.com/36947860/75307991-2b17d480-5888-11ea-8ede-9ca05ff4ab33.png" data-fancybox="group" data-caption="微信截图_20200224221524" class="fancybox"><img alt="微信截图_20200224221524" title="微信截图_20200224221524" data-src="https://user-images.githubusercontent.com/36947860/75307991-2b17d480-5888-11ea-8ede-9ca05ff4ab33.png" class="lazyload"></a></p><p>首先介绍一下贝叶斯分类器，<strong>贝叶斯分类遵循基本的三步骤</strong>。</p><ol><li>选择model，贝叶斯中当然选择的是贝叶斯分类器作为model</li><li>定义损失函数，分类问题的损失函数是极大似然估计(作者其他博文有讲)，在做极大似然估计时，我们首先要选择一个输出可能的分布，一般选择高斯分布，那这个时候就有人要问了，为什么是高斯分布呢？其实不管怎么样它总要有个分布，这个是人为选择的，也可以选择别的分布。选好分布后，就用极大似然法估计分布的参数。</li><li>选择最好的函数。</li></ol><hr><p>下面的推导过程展示了<strong>如何将二元高斯分布下的贝叶斯分类器转换为回归问题</strong>。</p><p><a href="https://user-images.githubusercontent.com/36947860/75308087-6ca87f80-5888-11ea-81ee-b4e545853d5f.png" data-fancybox="group" data-caption="微信截图_20200226105355" class="fancybox"><img alt="微信截图_20200226105355" title="微信截图_20200226105355" data-src="https://user-images.githubusercontent.com/36947860/75308087-6ca87f80-5888-11ea-81ee-b4e545853d5f.png" class="lazyload"></a></p><p><a href="https://user-images.githubusercontent.com/36947860/75308094-70d49d00-5888-11ea-9351-e97398b92c40.png" data-fancybox="group" data-caption="微信截图_20200226105439" class="fancybox"><img alt="微信截图_20200226105439" title="微信截图_20200226105439" data-src="https://user-images.githubusercontent.com/36947860/75308094-70d49d00-5888-11ea-9351-e97398b92c40.png" class="lazyload"></a></p><p><a href="https://user-images.githubusercontent.com/36947860/75308068-60bcbd80-5888-11ea-8280-904a2cef42c7.png" data-fancybox="group" data-caption="微信截图_20200226105502" class="fancybox"><img alt="微信截图_20200226105502" title="微信截图_20200226105502" data-src="https://user-images.githubusercontent.com/36947860/75308068-60bcbd80-5888-11ea-8280-904a2cef42c7.png" class="lazyload"></a></p><p><a href="https://user-images.githubusercontent.com/36947860/75308079-66b29e80-5888-11ea-8c4b-a1ee2789e5b0.png" data-fancybox="group" data-caption="微信截图_20200226105529" class="fancybox"><img alt="微信截图_20200226105529" title="微信截图_20200226105529" data-src="https://user-images.githubusercontent.com/36947860/75308079-66b29e80-5888-11ea-8c4b-a1ee2789e5b0.png" class="lazyload"></a></p><p><a href="https://user-images.githubusercontent.com/36947860/75308083-69ad8f00-5888-11ea-8531-9cd32af17b1d.png" data-fancybox="group" data-caption="微信截图_20200226105626" class="fancybox"><img alt="微信截图_20200226105626" title="微信截图_20200226105626" data-src="https://user-images.githubusercontent.com/36947860/75308083-69ad8f00-5888-11ea-8531-9cd32af17b1d.png" class="lazyload"></a></p><p>通过推导可以看出，分类问题和回归问题是统一的，我们不必再通过计算$\mu_1$,$\mu_2$,$\Sigma _1 $,$\Sigma_2$,$N_1$,$N_2$来计算概率，而可以通过DeepLearning的手段直接计算w和b，从而求得概率，而与线性回归不同的是，我们需要将输出结果用$\sigma()$函数转化到0~1之间，这就是<strong>逻辑回归</strong>。</p><h3 id="多分类和回归的统一——-Softmax"><a href="#多分类和回归的统一——-Softmax" class="headerlink" title="多分类和回归的统一—— $Softmax()$"></a>多分类和回归的统一—— $Softmax()$</h3><p>以上介绍的是二元分类和回归的关系，如果要将多分类问题和回归联系起来，那就要用到softmax，softmax能处理分类问题的原理和以上类似，不做原理分析和推导，直接用就可以了。</p><p>公式如下：</p><script type="math/tex; mode=display">S_i= {e_i\over \sum_j e^j}</script><p>图解：</p><p><a href="https://user-images.githubusercontent.com/36947860/75311806-e47ba780-5892-11ea-8245-1358b63a38dd.png" data-fancybox="group" data-caption="微信截图_20200226120956" class="fancybox"><img alt="微信截图_20200226120956" title="微信截图_20200226120956" data-src="https://user-images.githubusercontent.com/36947860/75311806-e47ba780-5892-11ea-8245-1358b63a38dd.png" class="lazyload"></a></p></body></html>]]></content>
+      
+      
+      <categories>
+          
+          <category> 机器学习 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>为什么采用交叉熵做为逻辑回归的损失函数</title>
       <link href="/2020/02/24/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%87%E7%94%A8%E4%BA%A4%E5%8F%89%E7%86%B5%E5%81%9A%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/"/>
       <url>/2020/02/24/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%87%E7%94%A8%E4%BA%A4%E5%8F%89%E7%86%B5%E5%81%9A%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/</url>
@@ -951,25 +995,6 @@
             <tag> 交叉熵 </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>分类和回归的逻辑统一</title>
-      <link href="/2020/02/24/%E5%88%86%E7%B1%BB%E5%92%8C%E5%9B%9E%E5%BD%92%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%9F%E4%B8%80%20/"/>
-      <url>/2020/02/24/%E5%88%86%E7%B1%BB%E5%92%8C%E5%9B%9E%E5%BD%92%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%9F%E4%B8%80%20/</url>
-      
-        <content type="html"><![CDATA[<html><head><link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script></head><body><p>分类和回归是机器学习的两种模型，但在某种程度上又是逻辑统一的。</p><h3 id="二分类和回归的统一——-sigma"><a href="#二分类和回归的统一——-sigma" class="headerlink" title="二分类和回归的统一——$\sigma()$"></a>二分类和回归的统一——$\sigma()$</h3><p>下面我们从贝叶斯分类器的角度将二分类和回归联系起来。</p><p><a href="https://user-images.githubusercontent.com/36947860/75307991-2b17d480-5888-11ea-8ede-9ca05ff4ab33.png" data-fancybox="group" data-caption="微信截图_20200224221524" class="fancybox"><img alt="微信截图_20200224221524" title="微信截图_20200224221524" data-src="https://user-images.githubusercontent.com/36947860/75307991-2b17d480-5888-11ea-8ede-9ca05ff4ab33.png" class="lazyload"></a></p><p>首先介绍一下贝叶斯分类器，<strong>贝叶斯分类遵循基本的三步骤</strong>。</p><ol><li>选择model，贝叶斯中当然选择的是贝叶斯分类器作为model</li><li>定义损失函数，分类问题的损失函数是极大似然估计(作者其他博文有讲)，在做极大似然估计时，我们首先要选择一个输出可能的分布，一般选择高斯分布，那这个时候就有人要问了，为什么是高斯分布呢？其实不管怎么样它总要有个分布，这个是人为选择的，也可以选择别的分布。选好分布后，就用极大似然法估计分布的参数。</li><li>选择最好的函数。</li></ol><hr><p>下面的推导过程展示了<strong>如何将二元高斯分布下的贝叶斯分类器转换为回归问题</strong>。</p><p><a href="https://user-images.githubusercontent.com/36947860/75308087-6ca87f80-5888-11ea-81ee-b4e545853d5f.png" data-fancybox="group" data-caption="微信截图_20200226105355" class="fancybox"><img alt="微信截图_20200226105355" title="微信截图_20200226105355" data-src="https://user-images.githubusercontent.com/36947860/75308087-6ca87f80-5888-11ea-81ee-b4e545853d5f.png" class="lazyload"></a></p><p><a href="https://user-images.githubusercontent.com/36947860/75308094-70d49d00-5888-11ea-9351-e97398b92c40.png" data-fancybox="group" data-caption="微信截图_20200226105439" class="fancybox"><img alt="微信截图_20200226105439" title="微信截图_20200226105439" data-src="https://user-images.githubusercontent.com/36947860/75308094-70d49d00-5888-11ea-9351-e97398b92c40.png" class="lazyload"></a></p><p><a href="https://user-images.githubusercontent.com/36947860/75308068-60bcbd80-5888-11ea-8280-904a2cef42c7.png" data-fancybox="group" data-caption="微信截图_20200226105502" class="fancybox"><img alt="微信截图_20200226105502" title="微信截图_20200226105502" data-src="https://user-images.githubusercontent.com/36947860/75308068-60bcbd80-5888-11ea-8280-904a2cef42c7.png" class="lazyload"></a></p><p><a href="https://user-images.githubusercontent.com/36947860/75308079-66b29e80-5888-11ea-8c4b-a1ee2789e5b0.png" data-fancybox="group" data-caption="微信截图_20200226105529" class="fancybox"><img alt="微信截图_20200226105529" title="微信截图_20200226105529" data-src="https://user-images.githubusercontent.com/36947860/75308079-66b29e80-5888-11ea-8c4b-a1ee2789e5b0.png" class="lazyload"></a></p><p><a href="https://user-images.githubusercontent.com/36947860/75308083-69ad8f00-5888-11ea-8531-9cd32af17b1d.png" data-fancybox="group" data-caption="微信截图_20200226105626" class="fancybox"><img alt="微信截图_20200226105626" title="微信截图_20200226105626" data-src="https://user-images.githubusercontent.com/36947860/75308083-69ad8f00-5888-11ea-8531-9cd32af17b1d.png" class="lazyload"></a></p><p>通过推导可以看出，分类问题和回归问题是统一的，我们不必再通过计算$\mu_1$,$\mu_2$,$\Sigma _1 $,$\Sigma_2$,$N_1$,$N_2$来计算概率，而可以通过DeepLearning的手段直接计算w和b，从而求得概率，而与线性回归不同的是，我们需要将输出结果用$\sigma()$函数转化到0~1之间，这就是<strong>逻辑回归</strong>。</p><h3 id="多分类和回归的统一——-Softmax"><a href="#多分类和回归的统一——-Softmax" class="headerlink" title="多分类和回归的统一—— $Softmax()$"></a>多分类和回归的统一—— $Softmax()$</h3><p>以上介绍的是二元分类和回归的关系，如果要将多分类问题和回归联系起来，那就要用到softmax，softmax能处理分类问题的原理和以上类似，不做原理分析和推导，直接用就可以了。</p><p>公式如下：</p><script type="math/tex; mode=display">S_i= {e_i\over \sum_j e^j}</script><p>图解：</p><p><a href="https://user-images.githubusercontent.com/36947860/75311806-e47ba780-5892-11ea-8245-1358b63a38dd.png" data-fancybox="group" data-caption="微信截图_20200226120956" class="fancybox"><img alt="微信截图_20200226120956" title="微信截图_20200226120956" data-src="https://user-images.githubusercontent.com/36947860/75311806-e47ba780-5892-11ea-8245-1358b63a38dd.png" class="lazyload"></a></p></body></html>]]></content>
-      
-      
-      <categories>
-          
-          <category> 机器学习 </category>
-          
-      </categories>
-      
       
     </entry>
     
